@@ -18,6 +18,7 @@ export default { //選項式一定會有
     <RouterLink to="/">Home</RouterLink>
     <RouterLink to="/about">About</RouterLink>
     <RouterLink to="/calc">Calc</RouterLink>
+    <RouterLink to="/ClassJan02">20240102</RouterLink>
   </header>
 
   <main>
@@ -31,4 +32,6 @@ export default { //選項式一定會有
 </template>
 
 <!-- CSS區域 -->
-<style scoped></style>
+<style lang="sass" scoped>
+
+</style>

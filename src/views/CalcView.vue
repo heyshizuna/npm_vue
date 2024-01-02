@@ -1,8 +1,8 @@
 <script>
-import  CalcButton from '@/components/customButton/CalcButton.vue'
+import CalcButton from '@/components/customButton/CalcButton.vue'
 
 export default {
-  components:{
+  components: {
     CalcButton,
   },
   data() {
@@ -11,37 +11,38 @@ export default {
       numB: 0,
       result: 0,
       html: `<div>所見即所得</div>`,
+      calcType:['+','-','*','/'],
     }
   },
   methods: {
-    add() {
+    calc(type) {
       if (this.numA.toString().trim() === '' || this.numB.toString().trim() === '') return;
-      this.result = this.numA + this.numB;
+      switch (type) {
+        case '+':
+          this.result = this.numA + this.numB;
+          break;
+        case '-':
+          this.result = this.numA - this.numB;
+          break;
+        case '*':
+          this.result = this.numA * this.numB;
+          break;
+        case '/':
+          this.result = this.numA / this.numB;
+          break;
+        default:
+          break;
+      }
     },
-    minus() {
-      if (this.numA.toString().trim() === '' || this.numB.toString().trim() === '') return;
-      this.result = this.numA - this.numB;
-    },
-    mult() {
-      if (this.numA.toString().trim() === '' || this.numB.toString().trim() === '') return;
-      this.result = this.numA * this.numB;
-    },
-    divi() {
-      if (this.numA.toString().trim() === '' || this.numB.toString().trim() === '') return;
-      this.result = this.numA / this.numB;
-    },
+    // 將子元件傳回來的值寫進主頁面data內
+    finalResult(result){
+      this.result=result;
+    }
   }
 }
 </script>
 
 <template>
-  <!-- v-if -->
-  <!-- v-else if -->
-  <!-- v-else -->
-  <!-- v-show -->
-  <!-- v-for 要補:key -->
-  <!-- v-bind 省略寫法“:” -->
-  <!-- v-on 省略寫法“@”連接觸發事件 -->
   <!-- v-html 將元素正確印在畫面上，最常用於所見即所得編輯器 -->
   <div v-html="html"></div>
   <!-- v-model input資料與變數產生連結 -->
@@ -49,20 +50,17 @@ export default {
   <div><label>數字Ａ：<input v-model="numA" type="number"></label></div>
   <div><label>數字Ｂ：<input v-model="numB" type="number"></label></div>
   <div class="btns">
-    <CalcButton @click="add()">+</CalcButton>
-    <CalcButton @click="minus()">-</CalcButton>
-    <CalcButton @click="mult()">*</CalcButton>
-    <CalcButton @click="divi()">/</CalcButton>
-    <!-- <button @click="add()" type="button" class="btn">+</button>
-    <button @click="minus()" type="button" class="btn">-</button>
-    <button @click="mult()" type="button" class="btn">*</button>
-    <button @click="divi()" type="button" class="btn">/</button> -->
+    <CalcButton :calc-type="calcType" :number-one="numA" :number-two="numB" @final-result="finalResult" />
+    <!-- <CalcButton @click="calc('+')">+</CalcButton>
+    <CalcButton @click="calc('-')">-</CalcButton>
+    <CalcButton @click="calc('*')">*</CalcButton>
+    <CalcButton @click="calc('/')">/</CalcButton> -->
   </div>
   <div class="output text-main-deep">
     計算結果：{{ result }}
   </div>
   <div class="box">
-    響應式斷點測試
+    Tailwind響應式斷點測試
   </div>
 </template>
 
@@ -71,14 +69,13 @@ export default {
 .calc {
   @apply mb-[5px] text-[lightblue];
 }
-input{
+
+input {
   @apply pl-2;
 }
+
 .btns {
   @apply flex gap-[15px] mt-[5px];
-
-  
-
 }
 
 .box {
