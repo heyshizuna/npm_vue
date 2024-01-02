@@ -6,8 +6,13 @@ export default {
   },
   data(){
     return{
-      numA:[],
+      numA:'0',
       numB:[],
+    }
+  },
+  methods:{
+    pushNumber(numberArray){
+      this.numA=numberArray;
     }
   }
 }
@@ -17,7 +22,7 @@ export default {
   <div class="number">數字Ａ：
     <div class="num">{{ numA }}</div>
   </div>
-  <NewCalc />
+  <NewCalc @push-number="pushNumber" />
 </template>
   
 <style lang="scss" scoped>

@@ -8,25 +8,37 @@ export default {
       type: Array,
     }
   },
+  emit:['pushNumber'],
   data() {
     return {
       numberA:[],
-      text: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', '']
+      textNum:[1,2,3,4,5,6,7,8,9,'.',0,'AC']
     }
   },
   methods:{
     pushNumber(num){
+      if(num == 'AC'){
+        this.numberA = [];
+      this.$emit('pushNumber','0');
+      return;
+      }
+      
+      if(this.numberA.length == 0 && Number(num) == 0){
+        return;
+      }else if((this.numberA.length == 0 && num == '.')){
+        this.numberA.push(0);
+      };
       this.numberA.push(num);
+      this.$emit('pushNumber',this.numberA.join(""));
     }
   },
-  emit:['pushNumber']
+  
 }
 </script>
 <template>
-  {{ numberA }}
-  <section class="newCalc">
-    <button type="button" class="calcBtn" v-for="item in text" :key="item.id" @click="pushNumber(item)">{{ item }}</button>
-  </section>
+  <div class="newCalc">
+    <button type="button" class="calcBtn" v-for="item in textNum" :key="item.id" @click="pushNumber(item)">{{ item }}</button>
+  </div>
 </template>
   
 <style lang="scss" scoped>

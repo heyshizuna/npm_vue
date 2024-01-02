@@ -15,25 +15,6 @@ export default {
     }
   },
   methods: {
-    calc(type) {
-      if (this.numA.toString().trim() === '' || this.numB.toString().trim() === '') return;
-      switch (type) {
-        case '+':
-          this.result = this.numA + this.numB;
-          break;
-        case '-':
-          this.result = this.numA - this.numB;
-          break;
-        case '*':
-          this.result = this.numA * this.numB;
-          break;
-        case '/':
-          this.result = this.numA / this.numB;
-          break;
-        default:
-          break;
-      }
-    },
     // 將子元件傳回來的值寫進主頁面data內
     finalResult(result){
       this.result=result;
