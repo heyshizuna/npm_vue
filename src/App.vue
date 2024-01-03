@@ -19,11 +19,11 @@ export default { //選項式一定會有
     <RouterLink to="/about">About</RouterLink>
     <RouterLink to="/calc">Calc</RouterLink>
     <RouterLink to="/ClassJan02">20240102</RouterLink>
+    <RouterLink to="/TodoList">TodoList</RouterLink>
   </header>
 
   <main>
    <RouterView />
-   <div>我來自公版，每個頁面都有我</div>
   </main>
 
   <footer>

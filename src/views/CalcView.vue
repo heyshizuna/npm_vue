@@ -10,7 +10,6 @@ export default {
       numA: 0,
       numB: 0,
       result: 0,
-      html: `<div>所見即所得</div>`,
       calcType:['+','-','*','/'],
     }
   },
@@ -30,15 +29,11 @@ export default {
   <div class="calc">計算機</div>
   <div><label>數字Ａ：<input v-model="numA" type="number"></label></div>
   <div><label>數字Ｂ：<input v-model="numB" type="number"></label></div>
-  <div class="btns">
-    <CalcButton :calc-type="calcType" :number-one="numA" :number-two="numB" @final-result="finalResult" />
-    <!-- <CalcButton @click="calc('+')">+</CalcButton>
-    <CalcButton @click="calc('-')">-</CalcButton>
-    <CalcButton @click="calc('*')">*</CalcButton>
-    <CalcButton @click="calc('/')">/</CalcButton> -->
-  </div>
   <div class="output text-main-deep">
     計算結果：{{ result }}
+  </div>
+  <div class="btns">
+    <CalcButton :calc-type="calcType" :number-one="numA" :number-two="numB" @final-result="finalResult" />
   </div>
   <div class="box">
     Tailwind響應式斷點測試

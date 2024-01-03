@@ -31,6 +31,11 @@ const router = createRouter({
       name:'ClassJan02',
       component:()=>import('../views/ClassJan02.vue')
     },
+    {
+      path:'/TodoList',
+      name:'TodoList',
+      component:()=>import('../views/TodoList.vue')
+    },
   ]
 })
 
