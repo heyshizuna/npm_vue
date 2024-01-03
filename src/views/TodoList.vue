@@ -3,17 +3,21 @@ export default {
   data() {
     return {
       newTodo: '',
+      newDate: '',
+      doTime: '',
       todoList: [
         // {
         //   id:1,
         //   todo: '今天好冷',
+        //   todoTime:'',
         //   checked: false,
         // },
-      ]
+      ],
     }
   },
   //網頁載入時先會觸發
   mounted() {
+    this.updateDate();
     //將sessionstorage的資料存進data裡，須將JSON格式轉譯回陣列
     if (sessionStorage.getItem('todoList')) {
       this.todoList = JSON.parse(sessionStorage.getItem('todoList'));
@@ -21,13 +25,13 @@ export default {
   },
   methods: {
     addList() {
-
       //抓陣列裡的id最大數+1當作是下一個項目的id
       let idStamp = this.todoList.length ? Math.max(...this.todoList.map(item => item.id)) + 1 : 1;
       if (!this.newTodo.trim()) return;
       this.todoList.push({
         id: idStamp,
         todo: this.newTodo,
+        todoTime: this.doTime,
         checked: false,
       })
 
@@ -35,9 +39,18 @@ export default {
       //需要將最新資料存入sessionStorage，須將陣列轉譯成JSON格式
       sessionStorage.setItem("todoList", JSON.stringify(this.todoList));
     },
-    delList() {
-
+    delList(index) {
+      this.todoList.splice(index, 1);
     },
+    updateDate() {
+      let newDate = new Date();
+      let year = newDate.getFullYear();
+      let month = newDate.getMonth() + 1;
+      let days = newDate.getDate();
+      let Time = (time) => (String(time).length < 2 ? `0${time}` : time);
+
+      this.newDate = `${year}-${Time(month)}-${Time(days)}`;
+    }
   }
 }
 </script>
@@ -47,16 +60,18 @@ export default {
     <div class="addList">
       <div class="detail">
         <input class="text" type="text" placeholder="需要做什麼呢？" v-model="newTodo">
-        事項完成期限：<input class="date" type="date">
-        事項記錄時間：<input class="timestamp" type="date">
+        事項完成期限：<input class="date" type="date" v-model="doTime" :min="newDate">
+        事項記錄日期：<span class="timestamp">{{ newDate }}</span>
       </div>
       <button type="button" class="btn" @click="addList()">新增</button>
     </div>
     <div class="checkList" v-if="todoList.length">
-      <div class="check" v-for="item in todoList" :key="item.id"
-        :class="{ 'line-through text-warmGray-400': item.checked === true }">
-        <label><input type="checkbox" v-model="item.checked"><span>{{ item.todo }}</span></label><font-awesome-icon
-          :icon="['fas', 'trash']" class="del" @click="delList(item.id)" />
+      <div class="check" v-for="(item, index) in todoList" :key="item.id"
+        :class="{ 'line-through': item.checked === true }">
+        <label><input type="checkbox" v-model="item.checked"><span>{{ item.todo }}</span></label>
+        <span class="todotime">{{ item.todoTime }}前完成</span>
+        <span>{{ newDate }}</span>
+        <font-awesome-icon :icon="['fas', 'trash']" class="del" @click="delList(index)" />
       </div>
     </div>
     <div class="clear" v-else>尚未新增待辦事項</div>
@@ -87,10 +102,13 @@ export default {
         flex-grow: 1;
         margin-bottom: 2px;
       }
-      .date{
+
+      .date {
         margin-right: 8px;
       }
-      .date,.timestamp{
+
+      .date,
+      .timestamp {
         width: 29.5%;
         height: 40px;
         background-color: #ebebeb;
@@ -136,6 +154,9 @@ export default {
           margin-right: 8px;
         }
       }
+      span{
+        margin-right: 16px;
+      }
 
       .del {
         font-size: 20px;
@@ -155,5 +176,4 @@ export default {
     color: #d85858;
     background-color: #ebebeb;
   }
-}
-</style>
+}</style>
