@@ -36,6 +36,11 @@ const router = createRouter({
       name:'TodoList',
       component:()=>import('../views/TodoList.vue')
     },
+    {
+      path:'/PictureUpdate',
+      name:'PictureUpdate',
+      component:()=>import('../views/PictureUpdate.vue')
+    },
   ]
 })
 

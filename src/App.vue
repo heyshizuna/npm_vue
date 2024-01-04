@@ -20,6 +20,7 @@ export default { //選項式一定會有
     <RouterLink to="/calc">Calc</RouterLink>
     <RouterLink to="/ClassJan02">20240102</RouterLink>
     <RouterLink to="/TodoList">TodoList</RouterLink>
+    <RouterLink to="/PictureUpdate">PictureUpdate</RouterLink>
   </header>
 
   <main>
